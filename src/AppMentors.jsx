@@ -4,7 +4,8 @@ export default function AppMentor() {
   const [person, setPerson] = useState({
     name: '엘리',
     title: '개발자',
-    mentor: [{
+    mentors: [
+      {
       name: '밥',
       title: '시니어개발자',
       },
@@ -21,16 +22,25 @@ export default function AppMentor() {
       </h1>
       <p> {person.name}의 멘토는 : </p>
       <ul>
-        {person.mentors.map((mentor, index) => {
+        {person.mentors.map((mentor, index) => (
           <li key={index}>
             {mentor.name} ({mentor.title})
           </li>
-        })}
+        ))}
       </ul>
       <button
         onClick={() => {
-          const prev = promt(`누구의 이름을 바꾸고 싶은가요?`);
-          const current = promt(`이름을 무엇으로 바꾸고 싶은가요?`);
+          const prev = prompt(`누구의 이름을 바꾸고 싶은가요?`);
+          const current = prompt(`이름을 무엇으로 바꾸고 싶은가요?`);
+          setPerson((person) => ({
+            ...person, 
+            mentors: person.mentors.map((mentor) => {
+            if(mentor.name === prev) {
+              return{ ...mentor, name: current };
+            } 
+              return mentor;
+          }),
+          }));
         }}
       >
         멘토의 이름 바꾸기
